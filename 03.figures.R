@@ -53,7 +53,7 @@ ggplot() +
     axis.text.y = element_blank(),
     axis.ticks.y = element_blank(),
     legend.key.size = unit(5, "mm"),
-    legend.position = c(0.85, 0.2),
+    legend.position = c(0.95, 0.2),
     legend.text = element_text(size = 10),
     legend.title = element_text(size = 12)
   ) -> nvc.caat_18
@@ -93,7 +93,7 @@ ggplot() +
     axis.text.y = element_blank(),
     axis.ticks.y = element_blank(),
     legend.key.size = unit(5, "mm"),
-    legend.position = c(0.85, 0.2),
+    legend.position = c(0.9, 0.2),
     legend.text = element_text(size = 10),
     legend.title = element_text(size = 12)
   ) -> bov.caat_18
@@ -132,7 +132,7 @@ ggplot() +
     axis.text.y = element_blank(),
     axis.ticks.y = element_blank(),
     legend.key.size = unit(5, "mm"),
-    legend.position = c(0.8, 0.2),
+    legend.position = c(0.88, 0.2),
     legend.text = element_text(size = 10),
     legend.title = element_text(size = 12, vjust = 1.5)
   )-> cap.caat_18
@@ -146,7 +146,7 @@ ggplot() +
     type = "seq",
     palette = "Blues",
     direction = -1,
-    name = "Drought exposure",
+    name = "Drought\nexposure",
     na.value = "Grey70"
   ) +
   geom_sf(
@@ -172,10 +172,10 @@ ggplot() +
     axis.text.y = element_blank(),
     axis.ticks.y = element_blank(),
     legend.key.size = unit(5, "mm"),
-    legend.position = c(0.85, 0.2),
+    legend.position = c(0.87, 0.2),
     legend.text = element_text(size = 10),
     legend.title = element_text(size = 12, vjust = 1.5)
   )-> seca.caat_18
 
 ggarrange(nvc.caat_18, seca.caat_18, bov.caat_18, cap.caat_18)->fig.food.map
-ggsave(plot = fig.food.map, filename = "fig.food.map.png")
+ggsave(plot = fig.food.map, filename = "fig.food.map.png", units = "in" , height = 8, width = 8.8)

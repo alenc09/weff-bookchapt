@@ -12,8 +12,8 @@ map_caat@data%>%
   select(nvcPerc_18, drought_exposure_com, bovMed_18, capMed_18)%>%
   rename("Native vegetation cover" = nvcPerc_18,
          "Drought exposure" = drought_exposure_com,
-        "Bovine heard" = bovMed_18,
-         "Goat heard" = capMed_18)%>%
+        "Bovine herd" = bovMed_18,
+         "Goat herd" = capMed_18)%>%
 ggcorr(method = c("pairwise","spearman"), label = T,
                    hjust = 0.8, vjust = 3,layout.exp = 3, label_round = 4)-> corr.food
 ggsave(plot = corr.food, filename = "corr.food.png")
