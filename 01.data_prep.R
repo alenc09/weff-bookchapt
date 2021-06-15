@@ -15,8 +15,10 @@ read_xlsx("ppm_85-19.xlsx") ->ppm_85_19
 read_xlsx("wivi_dim.xlsx")->wivi_dim
 read_xlsx("area_num_prop.xlsx", sheet = 1)->num_prop
 readOGR(dsn = "/home/lucas/Documentos/Doutorado/Dados/shapes/", layer = "muncat_2020") ->map_caat
+read_xlsx("pevs_18.xlsx")->pevs_18
+read_xlsx("/home/lucas/Documentos/Doutorado/projetos_paralelos/cap_wef-brasil/NEXUS_database.xlsx")->nexus_db
 
-
+## db_food####
 muns_br%>%
   select(CD_MUN, AREA_KM2)%>%
   mutate(CD_MUN= as.double(as.character(CD_MUN)),
@@ -53,3 +55,18 @@ length(unique(db_food$territory_id))
 map_caat@data%>%
   left_join(y= db_food, by = c("code_mn" = "territory_id"))%>%
   glimpse ->map_caat@data
+
+## db_energy####
+pevs_18%>%
+  mutate(code_muni = as.double(code_muni))%>%
+  left_join(y = select(muns_br, CD_MUN, area_ha), by = c("code_muni" = "CD_MUN"))%>%
+  left_join(y= select(nexus_db, cód.mun.,legal_tMS_a), by = c("code_muni" = "cód.mun."))%>%
+  mutate(carvKgHa_18 = carv_18*1000/area_ha,
+         lenKgHa_18 = len_18*1000/area_ha)%>%
+  glimpse->db_energy
+
+map_caat@data%>%
+  left_join(y=select(db_energy,code_muni, carvKgHa_18, lenKgHa_18, legal_tMS_a),
+            by = c("code_mn" = "code_muni"))%>%
+  glimpse->map_caat@data
+  

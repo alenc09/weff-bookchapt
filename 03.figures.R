@@ -10,6 +10,7 @@ library(ggthemes)
 library(dplyr)
 library(geobr)
 library(ggpubr)
+library(cowplot)
 
 ## data####
 st_as_sf(map_caat)->sf.map_caat
@@ -179,3 +180,44 @@ ggplot() +
 
 ggarrange(nvc.caat_18, seca.caat_18, bov.caat_18, cap.caat_18)->fig.food.map
 ggsave(plot = fig.food.map, filename = "fig.food.map.png", units = "in" , height = 8, width = 8.8)
+
+#Figures####
+## Energy####
+map_caat@data%>%
+  filter(carvKgHa_18 != 0)%>%
+  ggplot()+
+  geom_point(aes(x=nvcPerc_18, y=log(carvKgHa_18)))+
+  geom_smooth(aes(x=nvcPerc_18, y=carvKgHa_18), formula = log(y) ~ x, method = "lm")+
+  labs(x = "NVC 2018 (%)", y = "Charcoal")+
+  theme_classic()+
+  theme(axis.title = element_text(size = 12))-> nvc.carv
+
+map_caat@data%>%
+  filter(lenKgHa_18 != 0)%>%
+  ggplot()+
+  geom_point(aes(x=nvcPerc_18, y=log(lenKgHa_18)))+
+  geom_smooth(aes(x=nvcPerc_18, y=lenKgHa_18), formula = log(y) ~ x + I(x^2), method = "lm")+
+  labs(x = "NVC 2018 (%)", y = "Firewood")+
+  theme_classic()+
+  theme(axis.title = element_text(size = 12))-> nvc.len
+
+map_caat@data%>%
+  filter(carvKgHa_18 != 0, legal_tMS_a!=0)%>%
+  ggplot()+
+  geom_point(aes(x=legal_tMS_a, y=log(carvKgHa_18)))+
+  geom_smooth(aes(x=legal_tMS_a, y=carvKgHa_18), formula = log(y) ~ x, method = "lm")+
+  labs(x = "Legal offer of PDM", y = "Charcoal")+
+  theme_classic()+
+  theme(axis.title = element_text(size = 12))->legal.carv
+
+map_caat@data%>%
+  filter(lenKgHa_18 != 0, legal_tMS_a!=0)%>%
+  ggplot()+
+  geom_point(aes(x=legal_tMS_a, y=log(lenKgHa_18)))+
+  geom_smooth(aes(x=legal_tMS_a, y=lenKgHa_18), formula = log(y) ~ x, method = "lm")+
+  labs(x = "Legal offer of PDM", y = "Firewood")+
+  theme_classic()+
+  theme(axis.title = element_text(size = 12))-> legal.len
+
+plot_grid(nvc.carv, legal.carv, nvc.len, legal.len)
+ggsave("panel.energy.png", dpi=300)
