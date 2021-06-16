@@ -219,5 +219,5 @@ map_caat@data%>%
   theme_classic()+
   theme(axis.title = element_text(size = 12))-> legal.len
 
-plot_grid(nvc.carv, legal.carv, nvc.len, legal.len)
+plot_grid(nvc.carv, legal.carv, nvc.len, legal.len, labels = c("A", "B", "C", "D") )
 ggsave("panel.energy.png", dpi=300)
