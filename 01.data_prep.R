@@ -17,6 +17,7 @@ read_xlsx("area_num_prop.xlsx", sheet = 1)->num_prop
 readOGR(dsn = "/home/lucas/Documentos/Doutorado/Dados/shapes/", layer = "muncat_2020") ->map_caat
 read_xlsx("pevs_18.xlsx")->pevs_18
 read_xlsx("/home/lucas/Documentos/Doutorado/projetos_paralelos/cap_wef-brasil/NEXUS_database.xlsx")->nexus_db
+nexus_db$cód.mun.<- as.double(nexus_db$cód.mun.)
 
 ## db_food####
 muns_br%>%

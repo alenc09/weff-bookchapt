@@ -48,7 +48,7 @@ AIC(mod.len1, mod.len2, mod.len3)
  map_caat@data%>%
   filter(carvKgHa_18 != 0, lenKgHa_18 != 0, legal_tMS_a != 0)->db_test2
 
-lm(data = db_test2, log(carvKgHa_18) ~ legal_tMS_a)->mod.carv.legal
+lm(data = db_test2, log(carvKgHa_18) ~ log(legal_tMS_a))->mod.carv.legal
 plot(mod.carv.legal)
 summary(mod.carv.legal)
 
@@ -63,3 +63,4 @@ plot(mod.len.legal3)
 summary(mod.len.legal3)
 
 AIC(mod.len.legal1, mod.len.legal2, mod.len.legal3)
+

@@ -18,6 +18,8 @@ uf<-read_state()
 uf %>% 
   filter(abbrev_state %in% c("MG","BA","SE","PE", "AL","PB","RN","CE","PI"))->uf_caat
 
+read_country()->brazil_map
+
 #maps####
 ##nvc_2018####
 ggplot() +
@@ -58,6 +60,36 @@ ggplot() +
     legend.text = element_text(size = 10),
     legend.title = element_text(size = 12)
   ) -> nvc.caat_18
+
+##inset map####
+ggplot()+
+  geom_sf(data = brazil_map,
+        fill = "transparent",
+        #colour = "black",
+        lwd = 0.2)+
+  geom_sf(data = sf.map_caat,
+          colour = "transparent",
+          fill="grey50")+
+  geom_sf(data=uf$geom,
+          fill = "transparent",
+          colour = "black",
+          lwd = 0.1)+
+  theme(
+    text = element_text(family = '', size = 6),
+    panel.grid.major = element_blank(),
+    panel.background = element_blank(),
+    axis.title = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    plot.background = element_rect(fill = "transparent", color = NA))->inset_map
+
+##fig 1a####
+ggdraw()+
+  draw_plot(nvc.caat_18)+
+  draw_plot(inset_map,
+            x = 0.04, y = 0.65, width = 0.35, height = 0.35)->fig.1a
 
 ##cattle 2018####
 ggplot() +
@@ -178,7 +210,8 @@ ggplot() +
     legend.title = element_text(size = 12, vjust = 1.5)
   )-> seca.caat_18
 
-ggarrange(nvc.caat_18, seca.caat_18, bov.caat_18, cap.caat_18)->fig.food.map
+plot_grid(fig.1a, seca.caat_18, bov.caat_18, cap.caat_18, 
+          labels = c("a", "b", "c", "d"))->fig.food.map
 ggsave(plot = fig.food.map, filename = "fig.food.map.png", units = "in" , height = 8, width = 8.8)
 
 #Figures####
@@ -204,8 +237,8 @@ map_caat@data%>%
 map_caat@data%>%
   filter(carvKgHa_18 != 0, legal_tMS_a!=0)%>%
   ggplot()+
-  geom_point(aes(x=legal_tMS_a, y=log(carvKgHa_18)))+
-  geom_smooth(aes(x=legal_tMS_a, y=carvKgHa_18), formula = log(y) ~ x, method = "lm")+
+  geom_point(aes(x=log(legal_tMS_a), y=log(carvKgHa_18)))+
+  geom_smooth(aes(x=log(legal_tMS_a), y=carvKgHa_18), formula = log(y) ~ x, method = "lm")+
   labs(x = "Legal offer of PDM", y = "Charcoal")+
   theme_classic()+
   theme(axis.title = element_text(size = 12))->legal.carv
@@ -213,8 +246,8 @@ map_caat@data%>%
 map_caat@data%>%
   filter(lenKgHa_18 != 0, legal_tMS_a!=0)%>%
   ggplot()+
-  geom_point(aes(x=legal_tMS_a, y=log(lenKgHa_18)))+
-  geom_smooth(aes(x=legal_tMS_a, y=lenKgHa_18), formula = log(y) ~ x, method = "lm")+
+  geom_point(aes(x=log(legal_tMS_a), y=log(lenKgHa_18)))+
+  geom_smooth(aes(x=log(legal_tMS_a), y=lenKgHa_18), formula = log(y) ~ x, method = "lm")+
   labs(x = "Legal offer of PDM", y = "Firewood")+
   theme_classic()+
   theme(axis.title = element_text(size = 12))-> legal.len
