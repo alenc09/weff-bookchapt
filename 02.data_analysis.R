@@ -17,7 +17,7 @@ map_caat@data%>%
 ggcorr(method = c("pairwise","spearman"), label = T,
                    hjust = 0.8, vjust = 3,layout.exp = 3, label_round = 4)-> corr.food
 ggsave(plot = corr.food, filename = "corr.food.png")
-
+ggsave(plot = corr.food, filename = "figure2.jpg", dpi = 300)
 
 lm(data = map_caat@data, nvcPerc_18 ~ capMed_18 + bovMed_18 + drought_exposure_com)->mod.nvc_food
 par(mfrow = c(2,2))

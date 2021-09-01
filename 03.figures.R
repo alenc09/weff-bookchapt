@@ -213,6 +213,7 @@ ggplot() +
 plot_grid(fig.1a, seca.caat_18, bov.caat_18, cap.caat_18, 
           labels = c("a", "b", "c", "d"))->fig.food.map
 ggsave(plot = fig.food.map, filename = "fig.food.map.png", units = "in" , height = 8, width = 8.8)
+ggsave(plot = fig.food.map, filename = "figure3.jpg", units = "in" , height = 8, width = 8.8, dpi = 300)
 
 #Figures####
 ## Energy####
@@ -252,5 +253,6 @@ map_caat@data%>%
   theme_classic()+
   theme(axis.title = element_text(size = 12))-> legal.len
 
-plot_grid(nvc.carv, legal.carv, nvc.len, legal.len, labels = c("A", "B", "C", "D") )
+plot_grid(nvc.carv, legal.carv, nvc.len, legal.len, labels = c("A", "B", "C", "D") )-> panel.energy
 ggsave("panel.energy.png", dpi=300)
+ggsave(plot = panel.energy, filename = "figure4.jpg", dpi=300)
