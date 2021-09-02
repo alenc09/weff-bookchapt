@@ -240,7 +240,7 @@ map_caat@data%>%
   ggplot()+
   geom_point(aes(x=log(legal_tMS_a), y=log(carvKgHa_18)))+
   geom_smooth(aes(x=log(legal_tMS_a), y=carvKgHa_18), formula = log(y) ~ x, method = "lm")+
-  labs(x = "Legal offer of PDM", y = "Charcoal")+
+  labs(x = "Legal offer of PDM (log tons)", y = "Charcoal")+
   theme_classic()+
   theme(axis.title = element_text(size = 12))->legal.carv
 
@@ -249,7 +249,7 @@ map_caat@data%>%
   ggplot()+
   geom_point(aes(x=log(legal_tMS_a), y=log(lenKgHa_18)))+
   geom_smooth(aes(x=log(legal_tMS_a), y=lenKgHa_18), formula = log(y) ~ x, method = "lm")+
-  labs(x = "Legal offer of PDM", y = "Firewood")+
+  labs(x = "Legal offer of PDM (log tons)", y = "Firewood")+
   theme_classic()+
   theme(axis.title = element_text(size = 12))-> legal.len
 
